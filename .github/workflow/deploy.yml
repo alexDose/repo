@@ -1,12 +1,8 @@
 name: Musicfun Deploy
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
 
 jobs:
   deploy:
@@ -20,19 +16,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Enable Corepack (for pnpm)
-        run: corepack enable
-
       - name: Install dependencies
         run: pnpm install
 
       - name: Build project
         run: pnpm run build
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Deploy to Server
+        uses: actions/upload-artifact@v3
         with:
-          path: ./dist
-
-      - name: Deploy to Pages
-        uses: actions/deploy-pages@v1
+          path: dist
+      - uses: actions/deploy-pages@v4
