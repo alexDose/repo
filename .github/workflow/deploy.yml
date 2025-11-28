@@ -7,23 +7,15 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Build project
-        run: pnpm run build
-
-      - name: Deploy to Server
-        uses: actions/upload-artifact@v3
+      - run: pnpm install
+      - run: pnpm run build
+      - uses: actions/upload-artifact@v3
         with:
           path: dist
       - uses: actions/deploy-pages@v4
